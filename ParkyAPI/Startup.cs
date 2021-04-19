@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ParkyAPI.Data;
+using ParkyAPI.ParkyMapper;
 using ParkyAPI.Repository;
 using ParkyAPI.Repository.IRepository;
 
@@ -34,6 +35,9 @@ namespace ParkyAPI
 
             //We can now access the NationalParkRepository in any controllers
             services.AddScoped<INationalParkRepository, NationalParkRepository>();
+
+            // All out mappings are in the ParkyMappings
+            services.AddAutoMapper(typeof(ParkyMappings));
 
             services.AddControllers();
         }
