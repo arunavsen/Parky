@@ -46,7 +46,17 @@ namespace ParkyAPI
                 options.SwaggerDoc("ParkyOpenAPISpec", new OpenApiInfo()
                 {
                     Title = "Parky API",
-                    Version = "1"
+                    Version = "1",
+                    Description = "Udemy Parky API by Bhrugen",
+                    Contact = new OpenApiContact()
+                    {
+                        Email = "arunavsen96@gmail.com",
+                        Name = "Arunav Sen"
+                    },
+                    License = new OpenApiLicense()
+                    {
+                        Name = "ASP License"
+                    }
                 });
                 var xmlCommentFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var cmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentFile);
