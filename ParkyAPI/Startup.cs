@@ -38,6 +38,7 @@ namespace ParkyAPI
 
             //We can now access the NationalParkRepository in any controllers
             services.AddScoped<INationalParkRepository, NationalParkRepository>();
+            services.AddScoped<ITrailRepository, TrailRepository>();
 
             // All out mappings are in the ParkyMappings
             services.AddAutoMapper(typeof(ParkyMappings));
