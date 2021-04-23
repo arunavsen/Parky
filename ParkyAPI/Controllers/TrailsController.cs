@@ -125,7 +125,7 @@ namespace ParkyAPI.Controllers
 
         }
 
-        [HttpDelete("{TrailId:int}", Name = "DeleteTrail")]
+        [HttpDelete("{trailId:int}", Name = "DeleteTrail")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
