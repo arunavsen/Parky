@@ -9,7 +9,7 @@ namespace ParkyAPI.Model
 {
     public class Trail
     {
-        [Required]
+        [Key]
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
