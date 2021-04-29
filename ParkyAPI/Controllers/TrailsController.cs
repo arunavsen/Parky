@@ -13,7 +13,8 @@ using static System.Net.HttpStatusCode;
 
 namespace ParkyAPI.Controllers
 {
-    [Route("api/Trails")]
+    //[Route("api/Trails")]
+    [Route("api/v{version:apiVersion}/trails")]
     [ApiController]
     //[ApiExplorerSettings(GroupName = "ParkyOpenAPISpecTrails")]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

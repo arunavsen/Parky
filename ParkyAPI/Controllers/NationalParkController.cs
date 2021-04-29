@@ -13,7 +13,8 @@ using static System.Net.HttpStatusCode;
 
 namespace ParkyAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/nationalpark")]
+    //[Route("api/[controller]")]
     [ApiController]
     //[ApiExplorerSettings(GroupName = "ParkyOpenAPISpecNP")]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
