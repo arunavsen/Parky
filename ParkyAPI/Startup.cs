@@ -42,13 +42,18 @@ namespace ParkyAPI
 
             // All out mappings are in the ParkyMappings
             services.AddAutoMapper(typeof(ParkyMappings));
+            services.AddApiVersioning(options => { 
+                options.AssumeDefaultVersionWhenUnspecified = true; 
+                options.DefaultApiVersion= new ApiVersion(1,0);
+                options.ReportApiVersions = true;
+            });
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("ParkyOpenAPISpecNP", new OpenApiInfo()
+                options.SwaggerDoc("ParkyOpenAPISpec", new OpenApiInfo()
                 {
-                    Title = "Parky API (National Park)",
+                    Title = "Parky API",
                     Version = "1",
-                    Description = "Parky API of National Park",
+                    Description = "Parky API",
                     Contact = new OpenApiContact()
                     {
                         Email = "arunavsen96@gmail.com",
@@ -60,21 +65,21 @@ namespace ParkyAPI
                     }
                 });
 
-                options.SwaggerDoc("ParkyOpenAPISpecTrails", new OpenApiInfo()
-                {
-                    Title = "Parky API (Trails)",
-                    Version = "1",
-                    Description = "Parky API of Trails",
-                    Contact = new OpenApiContact()
-                    {
-                        Email = "arunavsen96@gmail.com",
-                        Name = "Arunav Sen"
-                    },
-                    License = new OpenApiLicense()
-                    {
-                        Name = "ASP License"
-                    }
-                });
+                //options.SwaggerDoc("ParkyOpenAPISpecTrails", new OpenApiInfo()
+                //{
+                //    Title = "Parky API (Trails)",
+                //    Version = "1",
+                //    Description = "Parky API of Trails",
+                //    Contact = new OpenApiContact()
+                //    {
+                //        Email = "arunavsen96@gmail.com",
+                //        Name = "Arunav Sen"
+                //    },
+                //    License = new OpenApiLicense()
+                //    {
+                //        Name = "ASP License"
+                //    }
+                //});
                 var xmlCommentFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var cmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentFile);
                 options.IncludeXmlComments(cmlCommentsFullPath);
@@ -96,8 +101,8 @@ namespace ParkyAPI
 
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/ParkyOpenAPISpecNP/swagger.json", "Parky API National Park");
-                options.SwaggerEndpoint("/swagger/ParkyOpenAPISpecTrails/swagger.json", "Parky API Trails");
+                options.SwaggerEndpoint("/swagger/ParkyOpenAPISpec/swagger.json", "Parky API");
+                //options.SwaggerEndpoint("/swagger/ParkyOpenAPISpecTrails/swagger.json", "Parky API Trails");
                 options.RoutePrefix = "";
             });
 
