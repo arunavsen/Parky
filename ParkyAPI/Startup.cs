@@ -8,16 +8,19 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using ParkyAPI.Data;
 using ParkyAPI.ParkyMapper;
 using ParkyAPI.Repository;
 using ParkyAPI.Repository.IRepository;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace ParkyAPI
 {
@@ -47,48 +50,52 @@ namespace ParkyAPI
                 options.DefaultApiVersion= new ApiVersion(1,0);
                 options.ReportApiVersions = true;
             });
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("ParkyOpenAPISpec", new OpenApiInfo()
-                {
-                    Title = "Parky API",
-                    Version = "1",
-                    Description = "Parky API",
-                    Contact = new OpenApiContact()
-                    {
-                        Email = "arunavsen96@gmail.com",
-                        Name = "Arunav Sen"
-                    },
-                    License = new OpenApiLicense()
-                    {
-                        Name = "ASP License"
-                    }
-                });
+            services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+            services.AddSwaggerGen();
 
-                //options.SwaggerDoc("ParkyOpenAPISpecTrails", new OpenApiInfo()
-                //{
-                //    Title = "Parky API (Trails)",
-                //    Version = "1",
-                //    Description = "Parky API of Trails",
-                //    Contact = new OpenApiContact()
-                //    {
-                //        Email = "arunavsen96@gmail.com",
-                //        Name = "Arunav Sen"
-                //    },
-                //    License = new OpenApiLicense()
-                //    {
-                //        Name = "ASP License"
-                //    }
-                //});
-                var xmlCommentFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var cmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentFile);
-                options.IncludeXmlComments(cmlCommentsFullPath);
-            });
+            //services.AddSwaggerGen(options =>
+            //{
+            //    options.SwaggerDoc("ParkyOpenAPISpec", new OpenApiInfo()
+            //    {
+            //        Title = "Parky API",
+            //        Version = "1",
+            //        Description = "Parky API",
+            //        Contact = new OpenApiContact()
+            //        {
+            //            Email = "arunavsen96@gmail.com",
+            //            Name = "Arunav Sen"
+            //        },
+            //        License = new OpenApiLicense()
+            //        {
+            //            Name = "ASP License"
+            //        }
+            //    });
+
+            //    options.SwaggerDoc("ParkyOpenAPISpecTrails", new OpenApiInfo()
+            //    {
+            //        Title = "Parky API (Trails)",
+            //        Version = "1",
+            //        Description = "Parky API of Trails",
+            //        Contact = new OpenApiContact()
+            //        {
+            //            Email = "arunavsen96@gmail.com",
+            //            Name = "Arunav Sen"
+            //        },
+            //        License = new OpenApiLicense()
+            //        {
+            //            Name = "ASP License"
+            //        }
+            //    });
+            //    var xmlCommentFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            //    var cmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentFile);
+            //    options.IncludeXmlComments(cmlCommentsFullPath);
+            //});
             services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
