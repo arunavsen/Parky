@@ -1,8 +1,27 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿<div class="border bg-light">
+    <div class="row p-3">
+        <div class="col-6">
+            <h2 class="text-primary">National Park list</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a class="btn btn-primary text-white">
+                <i class="fas fa-plus"></i> Create New National Park
+            </a>
+        </div>
+    </div>
+    <br/>
+    <table id="tblData" class="table table-bordered w-100">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>State</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/nationalPark.js"></script>
 }
-
-<h1>Index</h1>
-
