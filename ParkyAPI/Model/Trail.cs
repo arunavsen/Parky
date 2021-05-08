@@ -31,5 +31,8 @@ namespace ParkyAPI.Model
         public NationalPark NationalPark { get; set; }
 
         public DateTime DateTimeCreated { get; set; }
+
+        [Required]
+        public double Elevation { get; set; }
     }
 }

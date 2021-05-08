@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkyAPI", "ParkyAPI\ParkyAPI.csproj", "{0DFDAB02-0970-4DA3-A6FE-E4144FFD6AA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkyWeb", "ParkyWeb\ParkyWeb.csproj", "{70B96A13-D569-43AD-878A-3C8F561CD8DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkyWeb", "ParkyWeb\ParkyWeb.csproj", "{70B96A13-D569-43AD-878A-3C8F561CD8DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
