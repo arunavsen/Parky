@@ -47,8 +47,6 @@ namespace ParkyWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-
-
                 var files = HttpContext.Request.Form.Files;
                 if (files.Count > 0)
                 {

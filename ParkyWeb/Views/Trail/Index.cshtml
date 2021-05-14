@@ -1,26 +1,30 @@
-﻿<div>
+﻿<div class="p-4" style="border-radius: 20px;">
     <div class="row">
         <div class="col-6">
             <h2 class="text-primary">Trail list</h2>
         </div>
         <div class="col-6 text-right">
-            <a asp-action="Upsert" class="btn btn-primary text-white">
+            <a asp-action="Upsert" class="btn text-white" style="float: right; background-color: #b58900
+                                                                                                    ";>
                 <i class="fas fa-plus"></i> Create New Trail
             </a>
         </div>
     </div>
-    <br/>
-    <table id="tblData" class="table table-bordered w-100">
-        <thead>
-            <tr>
-                <th>National Park</th>
-                <th>Trail Name</th>
-                <th>Distance</th>
-                <th>Elevation</th>
-                <th class="text-center">Action</th>
-            </tr>
-        </thead>
-    </table>
+    <br />
+    <div style="background-color: #afeeee" class="p-3 rounded">
+        <table id="tblData" class="table table-striped table-bordered w-100">
+            <thead>
+                <tr class="table-danger">
+                    <th>National Park</th>
+                    <th>Trail Name</th>
+                    <th>Distance</th>
+                    <th>Elevation</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
 </div>
 
 @section Scripts
