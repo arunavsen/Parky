@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ParkyAPI.Model;
@@ -55,6 +56,7 @@ namespace ParkyAPI.Controllers
         /// <returns></returns>
         [HttpGet("{nationalParkId:int}", Name= "GetNationalPark")]
         [ProducesResponseType(200,Type = typeof(NationalParkDto))]
+        [Authorize]
         [ProducesResponseType(404)]
         [ProducesDefaultResponseType]
         public IActionResult GetNationalPark(int nationalParkId)
