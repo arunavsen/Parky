@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ParkyAPI.Data;
 using ParkyAPI.Model;
 using ParkyAPI.Repository.IRepository;
 
@@ -9,6 +10,13 @@ namespace ParkyAPI.Repository
 {
     public class UserRepository : IUserRepository
     {
+        private readonly ApplicationDbContext _db;
+
+        public UserRepository(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+
         public User Authenticate(string username, string password)
         {
             throw new NotImplementedException();
