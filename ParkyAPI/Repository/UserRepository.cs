@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ParkyAPI.Data;
 using ParkyAPI.Model;
@@ -18,10 +19,10 @@ namespace ParkyAPI.Repository
         private readonly AppSettings _appSettings;
 
 
-        public UserRepository(ApplicationDbContext db, AppSettings appSettings)
+        public UserRepository(ApplicationDbContext db, IOptions<AppSettings> appSettings)
         {
             _db = db;
-            _appSettings = appSettings;
+            _appSettings = appSettings.Value;
         }
 
         public User Authenticate(string username, string password)
@@ -49,6 +50,7 @@ namespace ParkyAPI.Repository
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             user.Token = tokenHandler.WriteToken(token);
+            user.Password = "";
 
             return user;
         }
