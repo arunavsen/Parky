@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ParkyWeb.Models;
@@ -16,12 +17,14 @@ namespace ParkyWeb.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly INationalParkRepository _npRepo;
         private readonly ITrailRepository _trailRepo;
+        private readonly IAccountRepository _accountRepository;
 
-        public HomeController(ILogger<HomeController> logger, INationalParkRepository npRepo, ITrailRepository trailRepo)
+        public HomeController(ILogger<HomeController> logger, INationalParkRepository npRepo, ITrailRepository trailRepo, IAccountRepository accountRepository)
         {
             _logger = logger;
             _npRepo = npRepo;
             _trailRepo = trailRepo;
+            _accountRepository = accountRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -43,6 +46,27 @@ namespace ParkyWeb.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            User user = new User();
+            return View(user);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(User objUser)
+        {
+            var user = await _accountRepository.LoginAsync(SD.AccountAPIPath + "authenticate/", objUser);
+            if (objUser.Token == null)
+            {
+                // Error
+                return View();
+            }
+            HttpContext.Session.SetString("JWToken",user.Token);
+            return RedirectToAction("~/Home/Index");
         }
     }
 }
