@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -31,8 +32,8 @@ namespace ParkyWeb.Controllers
         {
             IndexVM listOfParkAndTrails = new IndexVM()
             {
-                NationalParksList = await _npRepo.GetAllAsync(SD.NationalParkAPIPath),
-                TrailsList = await _trailRepo.GetAllAsync(SD.TrailAPIPath),
+                NationalParksList = await _npRepo.GetAllAsync(SD.NationalParkAPIPath, HttpContext.Session.GetString("JWToken")),
+                TrailsList = await _trailRepo.GetAllAsync(SD.TrailAPIPath, HttpContext.Session.GetString("JWToken")),
             };
             return View(listOfParkAndTrails);
         }
@@ -60,13 +61,13 @@ namespace ParkyWeb.Controllers
         public async Task<IActionResult> Login(User objUser)
         {
             var user = await _accountRepository.LoginAsync(SD.AccountAPIPath + "authenticate/", objUser);
-            if (objUser.Token == null)
+            if (user.Token == null)
             {
                 // Error
                 return View();
             }
             HttpContext.Session.SetString("JWToken",user.Token);
-            return RedirectToAction("~/Home/Index");
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -85,13 +86,14 @@ namespace ParkyWeb.Controllers
                 // Error
                 return View();
             }
-            return RedirectToAction("~/Home/Login");
+            return RedirectToAction("Login");
         }
 
-        public async Task<IActionResult> LogoutAsync()
+        public async Task<IActionResult> Logout()
         {
+            //await HttpContext.SignOutAsync();
             HttpContext.Session.SetString("JWToken", "");
-            return RedirectToAction("~/Home/Index");
+            return RedirectToAction("Index");
         }
     }
 }
